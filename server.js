@@ -7,7 +7,7 @@ server.get('/', (req, res) => {
 });
 
 //custom middleware
-
+i
 function logger(req, res, next) {}
 
 module.exports = server;
