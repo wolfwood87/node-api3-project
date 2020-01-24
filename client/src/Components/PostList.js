@@ -4,7 +4,8 @@ import Post from './Post';
 
 const PostList = (props) => {
     const [posts, setPosts] = useState([{text: ''}])
-    const [newPost, setNewPost] = useState({text: ''});
+    const [list, setList] = useState(false);
+    const [newPost, setNewPost] = useState({user_id: props.user_id, text: ''});
 
     useEffect(() => {
         axios
@@ -15,15 +16,52 @@ const PostList = (props) => {
             })
     }, [newPost])
 
+    const openList = () => {
+        setList(!list)
+    }
+    const handleChange = e => {
+        e.preventDefault();
+        setNewPost({
+            ...newPost,
+            [e.target.name]: e.target.value
+        })
+        console.log(newPost)
+      }
+      const submitNewPost = e => {
+        e.preventDefault();
+        console.log(newPost)
+        axios
+            .post(`https://node-project4.herokuapp.com/api/users/${props.user_id}/posts`, newPost)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
     return (
         <>
-            {posts.map((post,index) => (
+            {list &&
+            <div>{posts.map((post,index) => (
                 <Post 
                     text={post.text}
                     id={post.id}
                     key={index}
                 />
             ))}
+            <form>
+                    <input
+                    type='text'
+                    name="text"
+                    placeholder="Write a Post"
+                    value={newPost.text}
+                    onChange={handleChange}
+                    />
+                <button onClick={submitNewPost}>Submit</button>
+                </form>
+                </div>
+            }
+                <p onClick={openList}>&#709;</p>
         </>
     )
 }
