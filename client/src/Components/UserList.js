@@ -6,7 +6,9 @@ const UserList = (props) => {
     const [users, setUsers] = useState([{name: '', id: ''}]);
     const [newUser, setNewUser] = useState({name: ''})
     const [userForm, setUserForm] = useState(false);
-
+    const formStyle = {
+        margin: '1%'
+    }
     useEffect(() => {
         axios 
             .get('https://node-project4.herokuapp.com/api/users')
@@ -45,7 +47,7 @@ const UserList = (props) => {
     }
     return (
         <> 
-            <div>{userForm && 
+            <div style={formStyle}>{userForm && 
                 <form>
                     <input
                     type='text'
