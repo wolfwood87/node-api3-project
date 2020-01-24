@@ -34,6 +34,7 @@ const PostList = (props) => {
             .post(`https://node-project4.herokuapp.com/api/users/${props.user_id}/posts`, newPost)
             .then(res => {
                 console.log(res);
+                setNewPost({user_id: props.user_id, text: ''})
             })
             .catch(err => {
                 console.log(err)
@@ -42,11 +43,11 @@ const PostList = (props) => {
     return (
         <>
             {list &&
-            <div>{posts.map((post,index) => (
+            <div>{posts.map(post => (
                 <Post 
                     text={post.text}
                     id={post.id}
-                    key={index}
+                    key={post.id}
                 />
             ))}
             <form>
